@@ -4,7 +4,7 @@ version: 4.1.0
 maintainers:
   - "ynadtiy19 <fluteoceanuuy@gmail.com>"
 homepage: https://github.com/ynadtiy19/mydiumtify
-publish_to: https://pub.dev
+# publish_to: https://pub.dev
 
 environment:
   sdk: '>=3.0.2 <4.0.0'
