@@ -1,48 +1,71 @@
-group 'yunupay.flutter_apopen'
-version '1.0-SNAPSHOT'
-
+// buildscript 块保持不变，但内容已更新
 buildscript {
+    // ext.kotlin_version 您已经改对了，保持不变
     ext.kotlin_version = '1.8.22'
     repositories {
         google()
-        jcenter()
+        // 1. 移除 jcenter()，替换为 mavenCentral()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        // 2. 升级 Android Gradle Plugin (AGP) 版本，这是最重要的改动！
+        classpath 'com.android.tools.build:gradle:7.3.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
-rootProject.allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
+// 根项目的 allprojects 块不再需要，可以删除或保持原样，
+// 因为现代 Gradle 会从 settings.gradle 解析仓库。
 
+// 插件应用部分保持不变
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 28
+    // 3. 提升 compileSdkVersion 到一个现代的版本
+    compileSdkVersion 34
+
+    // namespace 您已经改对了，保持不变
     namespace 'com.supplyuuu.alipayshare'
 
     sourceSets {
         main.java.srcDirs += 'src/main/java'
     }
+
     defaultConfig {
+        // minSdkVersion 可以保持，但如果其他库有要求，可能需要提高
         minSdkVersion 16
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // 4. 将测试运行器迁移到 AndroidX
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     lintOptions {
         disable 'InvalidPackage'
     }
+
+    // 编译选项，确保Java 8兼容性，现代AGP需要
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // Kotlin选项，确保JVM目标版本
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
+
 repositories {
-    flatDir {  dirs 'libs' }
+    // flatDir 用于加载本地 libs 目录下的库，保持不变
+    flatDir { dirs 'libs' }
+    // 再次确保有 mavenCentral()
+    mavenCentral()
+    google()
 }
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // implementation files(...) 保持不变
     implementation files('libs/libapshare.jar')
 }
