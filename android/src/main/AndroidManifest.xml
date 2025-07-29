@@ -1,2 +1,24 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 这个<application>标签是必须的，用来包裹Activity -->
+    <application>
+
+        <!-- 支付宝SDK进行H5支付时需要的Activity -->
+        <!-- 这是几乎所有支付宝SDK都必须的组件 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <!-- 支付宝SDK进行授权时需要的Activity -->
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+
+    </application>
+
 </manifest>
