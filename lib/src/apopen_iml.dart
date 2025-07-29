@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 final MethodChannel _channel = const MethodChannel('com.sunpub/apopen')
@@ -11,65 +10,64 @@ Future<dynamic> _handler(MethodCall methodCall) {
 }
 
 // register ApOpen
-Future registerAP({String appId}) async {
+Future<dynamic> registerAP({required String appId}) async {
   return await _channel.invokeMethod("registerAp", {
-    "appId": appId
+    "appId": appId,
   });
 }
+
 // ShareText to AliPay
-Future shareText(String text) async {
+Future<dynamic> shareText(String text) async {
   return await _channel.invokeMethod("shareText", {
-    "text": text
-  });  
+    "text": text,
+  });
 }
-// Share Image
-Future shareImageData(Uint8List data) async {
+
+// Share Image with raw data
+Future<dynamic> shareImageData(Uint8List data) async {
   return await _channel.invokeMethod("shareImageData", {
-    "imageData": data
-  });  
+    "imageData": data,
+  });
 }
-Future shareImageUrl(String url) async {
+
+// Share Image with URL
+Future<dynamic> shareImageUrl(String url) async {
   return await _channel.invokeMethod("shareImageUrl", {
-    "imageUrl": url
-  });  
+    "imageUrl": url,
+  });
 }
+
 // Share Web with imageData
-Future shareWebAndImgData(
-  {
-    String title = '',
-    String desc = '',
-    @required
-    String wepageUrl = '',
-    @required
-    Uint8List imageData
-  }
-) async {
+Future<dynamic> shareWebAndImgData({
+  String title = '',
+  String desc = '',
+  required String wepageUrl,
+  required Uint8List imageData,
+}) async {
   return await _channel.invokeMethod("shareWebData", {
     "title": title,
     "desc": desc,
     "wepageUrl": wepageUrl,
-    "imageData": imageData
-  });  
+    "imageData": imageData,
+  });
 }
+
 // Share Web with imageUrl
-Future shareWebAndImgUrl(
-  {
-    String title = '',
-    String desc = '',
-    @required
-    String wepageUrl = '',
-    @required
-    String imageUrl
-  }
-) async {
+Future<dynamic> shareWebAndImgUrl({
+  String title = '',
+  String desc = '',
+  required String wepageUrl,
+  required String imageUrl,
+}) async {
   return await _channel.invokeMethod("shareWebUrl", {
     "title": title,
     "desc": desc,
     "wepageUrl": wepageUrl,
-    "imageUrl": imageUrl
-  });  
+    "imageUrl": imageUrl,
+  });
 }
-// is Alipay installed
-Future isAPAppInstalled() async{
-  return await _channel.invokeMethod("isAPAppInstalled");  
+
+// Check if Alipay app is installed
+Future<dynamic> isAPAppInstalled() async {
+  return await _channel.invokeMethod("isAPAppInstalled");
 }
