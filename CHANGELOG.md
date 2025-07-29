@@ -1,3 +1,5 @@
-## 0.0.6
+## 4.1.0
 
-* TODO: Change the kotlin version.
+*   Initial release of the package.
+*   Added features for sharing text, images, and web pages to Alipay.
+*   Resolved all publishing warnings.
